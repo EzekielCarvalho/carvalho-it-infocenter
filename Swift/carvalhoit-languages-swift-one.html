@@ -1,0 +1,743 @@
+<!-- User Story #1: I can see a main element with a corresponding id="main-doc", which contains the page's main content (technical documentation).
+
+User Story #2: Within the #main-doc element, I can see several section elements, each with a class of main-section. There should be a minimum of 5.
+
+User Story #3: The first element within each .main-section should be a header element which contains text that describes the topic of that section.
+
+User Story #4: Each section element with the class of main-section should also have an id that corresponds with the text of each header contained within it. Any spaces should be replaced with underscores (e.g. The section that contains the header "JavaScript and Java" should have a corresponding id="JavaScript_and_Java").
+
+User Story #5: The .main-section elements should contain at least 10 p elements total (not each).
+
+User Story #6: The .main-section elements should contain at least 5 code elements total (not each).
+
+User Story #7: The .main-section elements should contain at least 5 li items total (not each).
+
+User Story #8: I can see a nav element with a corresponding id="navbar".
+
+User Story #9: The navbar element should contain one header element which contains text that describes the topic of the technical documentation.
+
+User Story #10: Additionally, the navbar should contain link (a) elements with the class of nav-link. There should be one for every element with the class main-section.
+
+User Story #11: The header element in the navbar must come before any link (a) elements in the navbar.
+
+User Story #12: Each element with the class of nav-link should contain text that corresponds to the header text within each section (e.g. if you have a "Hello world" section/header, your navbar should have an element which contains the text "Hello world").
+
+User Story #13: When I click on a navbar element, the page should navigate to the corresponding section of the main-doc element (e.g. If I click on a nav-link element that contains the text "Hello world", the page navigates to a section element that has that id and contains the corresponding header.
+
+User Story #14: On regular sized devices (laptops, desktops), the element with id="navbar" should be shown on the left side of the screen and should always be visible to the user.
+
+User Story #15: My Technical Documentation page should use at least one media query. -->
+
+
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2&display=swap" rel="stylesheet">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .pagination a {
+            color: white;
+            float: none;
+            padding: 10px 20px;
+            text-decoration: none;
+            transition: background-color .3s;
+        }
+
+        .pagination a.active {
+            background-color: #ff2323;
+            color: #030303;
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: #000000;
+        }
+
+        div.stuck {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            background-color: rgb(255, 83, 7);
+            padding: 1px;
+            font-size: 20px;
+            text-align: center;
+            color: #343434;
+
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .containerone {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .containertwo {
+            padding: px;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+
+        .sidenav {
+
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidenav a {
+            padding: 10px 10px 10px 10px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+            float: left;
+            display: block;
+            color: #ffffff;
+            text-align: center;
+            text-decoration: none;
+
+            font-family: 'Baloo Paaji 2', cursive;
+            padding: 16px 10px;
+
+        }
+
+        .sidenav a:hover {
+            color: #f44b4b;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 30px;
+            margin-left: 50px;
+        }
+
+        body {
+
+
+            background-image: linear-gradient(rgb(255, 255, 255),
+                    rgb(208, 50, 50),
+                    rgba(255, 236, 11, 0.27),
+                    rgba(181, 185, 141, 0.22),
+                    rgba(57, 33, 33, 0.46),
+                    rgb(57, 33, 33),
+                    rgb(47, 21, 21)), url("https://images.unsplash.com/photo-1563498250890-28c63b64a217?ixlib=rb-1.2.1&auto=format&fit=crop&w=889&q=80");
+
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            /* overflow-x: hidden; /* Hide horizontal scrollbar */
+        }
+
+        .responsive {
+            width: 100%;
+            max-width: 100%;
+            height: ;
+
+            float: right;
+
+        }
+
+
+
+        body {
+            color: white;
+            margin-left: 0;
+            margin-right: 0;
+            margin-top: 0;
+            font-size: 28px;
+            font-family: 'Baloo Paaji 2', cursive;
+        }
+
+        .header {
+            background-color: #f44b4b;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .navbartwo {
+            overflow: hidden;
+            background-color: #adadad;
+            position: fixed;
+            bottom: 0;
+            list-style: none;
+            font-weight: bold;
+            float: left;
+            width: 100%;
+            word-spacing: 0px;
+
+            color: #fff;
+            font-size: 20px;
+
+            box-shadow: 0 9px 06px 0 rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid #000000;
+
+            top: 0;
+            position: -webkit-sticky;
+            position: sticky;
+
+            position: -moz-sticky;
+            position: -ms-sticky;
+            position: -o-sticky;
+        }
+
+        .navbartwo a {
+            float: left;
+            display: block;
+            color: #343434;
+            text-align: center;
+            padding: 1px 15px;
+            text-decoration: none;
+
+            font-family: 'Baloo Paaji 2', cursive;
+
+            text-decoration: none;
+        }
+
+        .navbartwo a:hover {
+            background: #e85757;
+            color: black;
+
+        }
+
+        .navbartwo a.active {
+            background-color: #d04545;
+            color: white;
+        }
+
+        #navbar {
+            overflow: visible;
+            list-style: none;
+            font-weight: bold;
+            float: left;
+            width: 100%;
+            word-spacing: 0px;
+            background: #adadad;
+            margin-bottom: %;
+
+            color: #fff;
+            font-size: 20px;
+
+            box-shadow: 0 9px 06px 0 rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid #000000;
+
+            top: 0;
+            position: -webkit-sticky;
+            position: sticky;
+
+            position: -moz-sticky;
+            position: -ms-sticky;
+            position: -o-sticky;
+
+        }
+
+        #navbar a {
+            float: left;
+            display: block;
+            color: #343434;
+            text-align: center;
+            text-decoration: none;
+
+            font-family: 'Baloo Paaji 2', cursive;
+            padding: 17px 8px;
+            text-decoration: none;
+
+        }
+
+        #navbar a:hover {
+            background-color: #f44b4b;
+            color: black;
+        }
+
+        #navbar a.active {
+            background-color: #4b4a4a;
+            color: #f44b4b;
+        }
+
+        .content {
+
+            text-align;
+            font-size: 65%;
+            font-family: 'Baloo Paaji 2', cursive;
+        }
+
+        .sticky {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .sticky+.content {
+            padding-top: 60px;
+        }
+
+        .separator-type,
+        .title-type,
+        .intro-type,
+        .content-type .intro-type p {
+            position: relative;
+        }
+
+        .intro-type .container {
+            padding: 107px 0px 102px 0px !important;
+        }
+
+        .company-heading h1 {
+            margin-bottom: 60px;
+            padding-bottom: 50px;
+            line-height: 80px;
+            color: #fff;
+            font-weight: 700 !important;
+            text-align: center;
+        }
+
+        .jumbo {
+            margin-bottom: 10px;
+            margin-top: 50px;
+        }
+
+        .seo-header,
+        .product-header,
+        .intro-type .container h1.white,
+        .company-heading h1 {
+            font-weight: 100 !important;
+            text-transform: capitalize;
+            font-size: 55px;
+            margin-bottom: 20px;
+        }
+
+
+        img,
+        figure {
+            max-width: 100%;
+        }
+
+
+        section img {
+
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+        }
+
+    </style>
+
+    <title>Carvalho's IT infocenter - Languages - Swift</title>
+
+    <div class="gradient">
+
+
+        <img style="width: 100%;
+  height: 400%;
+  background-size: cover;" src="https://skywell.software/wp-content/uploads/2019/03/swift-programming-1024x455.jpg" alt="Nature" class="responsive" width="800" height="400">
+
+
+
+        <div id="navbar">
+
+            <span style="float: left;
+  display: block;
+  color: #343434;
+  text-align: center;
+  text-decoration: none;
+
+font-family: 'Baloo Paaji 2', cursive;
+  padding: 17px 8px;
+  text-decoration: none;
+  font-size: 20px;cursor:pointer" onclick="openNav()">&#9776; Languages</span>
+            <a href="javascript:void(0)">Home</a>
+
+            <a href="javascript:void(0)">About Us</a>
+
+            <a href="javascript:void(0)"> Contact Us</a>
+        </div>
+
+
+
+        <div class="content">
+
+            <div class="main">
+                <section id="section2">
+                    <div class="container jumbo">
+                        <div class="jumbotron">
+
+                            \
+                            <div class="stuck">
+                                <h3>Swift</h3>
+                            </div>
+
+
+
+
+                            <div class="containertwo">
+                                <div class="containerone">
+                                    <div class="stuck">
+                                        <h3>Brief Overview into the history</h3>
+                                    </div>
+
+                                    <ul>
+                                        <li>
+
+
+                                            Swift is a general-purpose, multi-paradigm, compiled programming language developed by Apple Inc. for iOS, iPadOS, macOS, watchOS, tvOS, Linux, and z/OS. Swift is designed to work with Apple's Cocoa and Cocoa Touch frameworks and the large body of existing Objective-C code written for Apple products. </li> <br>
+                                        <li>It is built with the open source LLVM compiler framework and has been included in Xcode since version 6, released in 2014. On Apple platforms, it uses the Objective-C runtime library which allows C, Objective-C, C++ and Swift code to run within one program.</li> <br>
+
+                                        <li>Apple intended Swift to support many core concepts associated with Objective-C, notably dynamic dispatch, widespread late binding, extensible programming and similar features, but in a "safer" way, making it easier to catch software bugs; Swift has features addressing some common programming errors like null pointer dereferencing and provides syntactic sugar to help avoid the pyramid of doom. </li> <br>
+                                        <li>Swift supports the concept of protocol extensibility, an extensibility system that can be applied to types, structs and classes, which Apple promotes as a real change in programming paradigms they term "protocol-oriented programming" (similar to traits).</li> <br>
+
+                                        <li>Swift was introduced at Apple's 2014 Worldwide Developers Conference (WWDC).It underwent an upgrade to version 1.2 during 2014 and a more major upgrade to Swift 2 at WWDC 2015. Initially a proprietary language, version 2.2 was made open-source software under the Apache License 2.0 on December 3, 2015, for Apple's platforms and Linux.</li> <br>
+
+                                        <li>Through version 3.0 the syntax of Swift went through significant evolution, with the core team making source stability a focus in later versions. In the first quarter of 2018 Swift surpassed Objective-C in measured popularity.</li> <br>
+
+                                        <li>Swift 4.0, released in 2017, introduced several changes to some built-in classes and structures. Code written with previous versions of Swift can be updated using the migration functionality built into Xcode. Swift 5, released in March 2019, introduced a stable binary interface on Apple platforms, allowing the Swift runtime to be incorporated into Apple operating systems. It is source compatible with Swift 4.</li> <br>
+
+                                        <li>Swift 5.1 was officially released in September 2019. Swift 5.1 builds on the previous version of Swift 5 by extending the stable features of the language to compile-time with the introduction of module stability. The introduction of module stability makes it possible to create and share binary frameworks that will work with future releases of Swift.</li> <br>
+                                    </ul>
+
+                                    <img src="https://coursereport-s3-production.global.ssl.fastly.net/rich/rich_files/rich_files/4697/original/ios-swift-beginners-guide.png" alt="Swift explanation and comparison" class="responsive" width="400" height="200"><br><br>
+                                    
+                                         <img src="https://www.cleveroad.com/images/article-previews/swift-language-performance.png" alt="Swift explanation and comparison" class="responsive" width="400" height="200"><br><br>
+                                    
+                                         <img src="https://www.cleveroad.com/images/article-previews/objective-c-vs-swift-comparison.png" alt="Swift explanation and comparison" class="responsive" width="400" height="200"><br><br>
+
+
+                                    <ul> <strong>1) The For Loop </strong>
+                                        <li>
+
+                                            Instead of writing out the same code over and over, loops allow us to tell computers to repeat a given block of code on its own. One way to give computers these instructions is with a for loop.</li><br>
+                                        <li>
+                                            The typical for loop includes an iterator variable that usually appears in all three expressions. The iterator variable is initialized, checked against the stopping condition, and assigned a new value on each loop iteration. Iterator variables can have any name, but it’s best practice to use a descriptive variable name.</li><br>
+
+                                        <li>A for loop contains three expressions separated by ; inside the parentheses:</li><br>
+
+                                        <li>an initialization starts the loop and can also be used to declare the iterator variable.</li><br>
+                                        <li>a stopping condition is the condition that the iterator variable is evaluated against— if the condition evaluates to true the code block will run, and if it evaluates to false the code will stop.</li><br>
+                                        <li>an iteration statement is used to update the iterator variable on each loop.</li><br>
+                                        <li>The for loop syntax looks like this:</li><br>
+
+                                        for (let counter = 0; counter < 4; counter++) { console.log(counter); } <br>
+                                            <li> In this example, the output would be the following:</li><br>
+
+                                            0<br>
+                                            1<br>
+                                            2<br>
+                                            3<br>
+                                            <li>Let’s break down the example:</li><br>
+
+                                            <li>The initialization is let counter = 0, so the loop will start counting at 0.</li><br>
+                                            <li>The stopping condition is counter < 4, meaning the loop will run as long as the iterator variable, counter, is less than 4.</li><br>
+                                            <li>The iteration statement is counter++. This means after each loop, the value of counter will increase by 1. For the first iteration counter will equal 0, for the second iteration counter will equal 1, and so on.</li><br>
+                                            <li>The code block is inside of the curly braces, console.log(counter), will execute until the condition evaluates to false. The condition will be false when counter is greater than or equal to 4 — the point that the condition becomes false is sometimes called the stop condition.</li><br>
+                                            <li>This for loop makes it possible to write 0, 1, 2, and 3 programmatically.</li><br>
+
+
+
+                                            <li>What if we want the for loop to log 3, 2, 1, and then 0? With simple modifications to the expressions, we can make our loop run backward!</li><br>
+
+                                            <li>To run a backward for loop, we must:</li><br>
+
+                                            <li>Set the iterator variable to the highest desired value in the initialization expression.</li><br>
+                                            <li>Set the stopping condition for when the iterator variable is less than the desired amount.</li><br>
+                                            <li>The iterator should decrease in intervals after each iteration.</li><br>
+
+                                            <li> To cite an example:</li>
+                                            for (let counter = 3; counter >=0 ; counter--){<br>
+                                            console.log(counter);<br>
+                                            }<br><br>
+
+                                            This counts from 3 till 0.
+
+
+                                    </ul>
+
+                                    <hr>
+
+                                    <ul> <strong>2) Global Scope</strong>
+                                        <li>
+
+
+                                            Scope in hindsight, refers to the context or situation in which our variables are declared. We consider scopes in connection to blocks because variables can exist either inside or outside of these blocks.</li><br>
+
+                                        <li>In global scope, variables are declared outside of blocks. These variables are called global variables. Because global variables are not bound inside a block, they can be accessed by any code in the program, including code in blocks.</li><br>
+
+                                        <li>Let’s take a look at an example of global scope:</li><br>
+
+                                        const color = 'blue'<br><br>
+
+                                        const returnSkyColor = () => {<br>
+                                        return color; // blue <br>
+                                        };<br><br>
+
+                                        console.log(returnSkyColor()); // blue<br><br>
+                                        <li>Even though the color variable is defined outside of the block, it can be accessed in the function block, giving it global scope.</li><br>
+                                        In turn, color can be accessed within the returnSkyColor function block.<br><br>
+
+                                    </ul>
+
+                                    <hr>
+
+                                    <ul> <strong>3) Block Scope</strong>
+                                        <li>
+
+
+                                            These refer to variables that are defined within a block. It is only accessible to the code within the curly braces {}. We say that variable has block scope because it is only accessible to the lines of code within that block.</li><br>
+
+                                        <li>Variables that are declared with block scope are known as local variables because they are only available to the code that is part of the same block.</li><br>
+
+                                        <li>Block scope works like this:</li><br>
+
+                                        const logSkyColor = () => {<br>
+                                        let color = 'blue'; <br>
+                                        console.log(color); // blue <br>
+                                        };<br><br>
+
+                                        logSkyColor(); // blue <br>
+                                        console.log(color); // ReferenceError<br><br>
+                                        You’ll notice:<br><br>
+
+                                        <li>We define a function logSkyColor().<br>
+                                            Within the function, the color variable is only available within the curly braces of the function.
+                                            If we try to log the same variable outside the function, throws a ReferenceError.</li><br><br>
+
+                                    </ul>
+
+                                    <hr>
+
+                                    <ul> <strong>4) Scope Pollution</strong>
+
+
+                                        <li>
+
+                                            The act of maintaining too many global variables can cause problems in a program.</li><br>
+
+                                        <li>When you declare global variables, they go to the global namespace. The global namespace allows the variables to be accessible from anywhere in the program. These variables remain there until the program finishes which means our global namespace can fill up really quickly.</li><br>
+
+                                        <li>Scope pollution is when we have too many global variables that exist in the global namespace, or when we reuse variables across different scopes. Scope pollution makes it difficult to keep track of our different variables and sets us up for potential accidents. For example, globally scoped variables can collide with other variables that are more locally scoped, causing unexpected behavior in our code.</li><br>
+
+                                        <li>Let’s consider the following example</li><br>
+
+                                        let num = 50;<br><br>
+
+                                        const logNum = () => {<br>
+                                        num = 100; // Take note of this line of code<br>
+                                        console.log(num);<br>
+                                        };<br><br>
+
+                                        logNum(); // Prints 100<br>
+                                        console.log(num); // Prints 100<br>
+                                        You’ll notice:<br><br>
+
+                                        <li>We have a variable num.</li><br>
+                                        <li>Inside the function body of logNum(), we want to declare a new variable but forgot to use the let keyword.</li><br>
+                                        <li>When we call logNum(), num gets reassigned to 100.</li><br>
+                                        <li>The reassignment inside logNum() affects the global variable num.</li><br>
+                                        <li>Even though the reassignment is allowed and we won’t get an error, if we decided to use num later, we’ll unknowingly use the new value of num.</li><br>
+                                        <li>While it’s important to know what global scope is, it’s best practice to not define variables in the global scope.</li><br><br>
+
+
+                                    </ul>
+
+                                    <hr>
+
+                                    <ul> <strong>5)Practice Good Scoping</strong>
+                                        <li>
+
+                                            As a result of the difficulties with global variables and scope pollution, we should follow best practices for scoping our variables as tightly as possible using block scope.</li><br>
+
+                                        <li>Tightly scoping our variables can have tremendous benefits such as the following:</li><br>
+
+                                        <li>It will make your code more readable since the blocks will organize your code into discrete sections.</li><br>
+                                        <li>It makes your code more understandable since it clarifies which variables are associated with different parts of the program rather than having to keep track of them line after line!</li><br>
+                                        <li>It’s easier to maintain your code, since your code will be modular.</li><br>
+                                        <li>It will save memory in your code because it will cease to exist after the block finishes running.</li><br>
+                                        <li>Here’s another example of how to use block scope, as defined within an if block:</li><br>
+
+                                        const logSkyColor = () => {<br>
+                                        const dusk = true;<br>
+                                        let color = 'blue'; <br>
+                                        if (dusk) {<br>
+                                        let color = 'pink';<br>
+                                        console.log(color); // pink<br>
+                                        }<br>
+                                        console.log(color); // blue <br>
+                                        };<br>
+
+                                        console.log(color); // ReferenceError<br>
+                                        Here, you’ll notice:<br>
+
+                                        <li>We create a variable dusk inside the logSkyColor() function.</li><br>
+                                        <li>After the if statement, we define a new code block with the {} braces. Here we assign a new value to the variable color if the if statement is truthy.</li><br>
+                                        <li>Within the if block, the color variable holds the value 'pink', though outside the if block, in the function body, the color variable holds the value 'blue'.</li><br>
+                                        <li>While we use block scope, we still pollute our namespace by reusing the same variable name twice. A better practice would be to rename the variable inside the block.</li><br>
+                                        <li>Block scope is a powerful tool in JavaScript, since it allows us to define variables with precision, and not pollute the global namespace. If a variable does not need to exist outside a block— it shouldn’t!</li> <br>
+
+                                    </ul>
+
+                                    <hr>
+
+                                    <ol> <strong><u>Summary </u></strong> <br>
+
+
+
+                                        In this category we've covered about scope and how it impacts the accessibility of different variables.
+
+                                        To review:
+
+                                        <li>Scope is the idea in programming that some variables are accessible/inaccessible from other parts of the program.</li> <br>
+                                        <li>Blocks are statements that exist within curly braces {}.</li> <br>
+                                        <li>Global scope refers to the context within which variables are accessible to every part of the program.</li> <br>
+                                        <li>Global variables are variables that exist within global scope.</li> <br>
+                                        <li>Block scope refers to the context within which variables that are accessible only within the block they are defined.</li> <br>
+                                        <li>Local variables are variables that exist within block scope.</li> <br>
+                                        <li>Global namespace is the space in our code that contains globally scoped information.</li> <br>
+                                        <li>Scope pollution is when too many variables exist in a namespace or variable names are reused.</li> <br>
+                                        <li>As you continue your coding journey, remember to use best practices when declaring your variables! Scoping your variables tightly will ensure that your code has clean, organized, and modular logic.</li> <br> <br>
+
+                                    </ol>
+
+                                    <div class="pagination" style="text-align: center;">
+                                        <a href="#">&laquo;</a>
+                                        <a class="active" href="#">1</a>
+                                        <a href="#">2</a>
+                                        <a href="#">3</a>
+                                        <a href="#">4</a>
+                                        <a  href="#">5</a>
+                                        <a href="#">6</a>
+                                        <a href="#">7</a>
+                                        <a href="#">8</a>
+                                        <a href="#">9</a>
+                                        <a href="#">10</a>
+                                        <a href="#">11</a>
+                                        <a href="#">12</a>
+                                        <a href="#">13</a>
+                                        <a href="#">14</a>
+                                        <a href="#">15</a>
+                                        <a href="#">16</a>
+                                        <a href="#">17</a>
+                                        <a href="#">&raquo;</a>
+                                    </div> <br>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <img src="https://cdn.arstechnica.net/wp-content/uploads/2015/06/IMG_00441.jpg" alt="Nature" class="responsive" width="800" height="400">
+
+                    <div id="mySidenav" class="sidenav">
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                        <a href="#">HTML5</a>
+                        <a href="#">CSS3</a>
+                        <a href="#">Javascript</a>
+                        <a href="#">React</a>
+                        <a href="#">Swift</a>
+                    </div>
+
+                    <div class="navbartwo">
+                        <a href="#References">References</a>
+                        <a href="#">Privacy</a>
+
+                    </div>
+
+
+                </section>
+            </div>
+
+        </div>
+
+
+
+</head>
+
+<main>
+
+    <header>
+
+    </header>
+
+    <script>
+        $(document).ready(function() {
+            $("a").on('click', function(event) {
+                if (this.hash !== "") {
+                    event.preventDefault();
+                    var hash = this.hash;
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top
+                    }, 800, function() {
+                        window.location.hash = hash;
+                    });
+                }
+            });
+        });
+
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="scroll-down.js"></script>
+
+    <script>
+        window.onscroll = function() {
+            myFunction()
+        };
+
+        var navbar = document.getElementById("navbar");
+        var sticky = navbar.offsetTop;
+
+        function myFunction() {
+            if (window.pageYOffset >= sticky) {
+                navbar.classList.add("sticky")
+            } else {
+                navbar.classList.remove("sticky");
+            }
+        }
+
+    </script>
+
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "120px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+
+    </script>
+
+    <footer>
+
+
+    </footer>
+
+
+</main>
+
+<body>
+    <script src="js/scripts.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,637 @@
+<!-- User Story #1: I can see a main element with a corresponding id="main-doc", which contains the page's main content (technical documentation).
+
+User Story #2: Within the #main-doc element, I can see several section elements, each with a class of main-section. There should be a minimum of 5.
+
+User Story #3: The first element within each .main-section should be a header element which contains text that describes the topic of that section.
+
+User Story #4: Each section element with the class of main-section should also have an id that corresponds with the text of each header contained within it. Any spaces should be replaced with underscores (e.g. The section that contains the header "JavaScript and Java" should have a corresponding id="JavaScript_and_Java").
+
+User Story #5: The .main-section elements should contain at least 10 p elements total (not each).
+
+User Story #6: The .main-section elements should contain at least 5 code elements total (not each).
+
+User Story #7: The .main-section elements should contain at least 5 li items total (not each).
+
+User Story #8: I can see a nav element with a corresponding id="navbar".
+
+User Story #9: The navbar element should contain one header element which contains text that describes the topic of the technical documentation.
+
+User Story #10: Additionally, the navbar should contain link (a) elements with the class of nav-link. There should be one for every element with the class main-section.
+
+User Story #11: The header element in the navbar must come before any link (a) elements in the navbar.
+
+User Story #12: Each element with the class of nav-link should contain text that corresponds to the header text within each section (e.g. if you have a "Hello world" section/header, your navbar should have an element which contains the text "Hello world").
+
+User Story #13: When I click on a navbar element, the page should navigate to the corresponding section of the main-doc element (e.g. If I click on a nav-link element that contains the text "Hello world", the page navigates to a section element that has that id and contains the corresponding header.
+
+User Story #14: On regular sized devices (laptops, desktops), the element with id="navbar" should be shown on the left side of the screen and should always be visible to the user.
+
+User Story #15: My Technical Documentation page should use at least one media query. -->
+
+
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2&display=swap" rel="stylesheet">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .pagination a {
+            color: white;
+            float: none;
+            padding: 10px 20px;
+            text-decoration: none;
+            transition: background-color .3s;
+        }
+
+        .pagination a.active {
+            background-color: #ffcb1e;
+            color: #030303;
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: #000000;
+        }
+
+        div.stuck {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            background-color: #ffeb00;
+            padding: 1px;
+            font-size: 20px;
+            text-align: center;
+            color: #343434;
+
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .containerone {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .containertwo {
+            padding: px;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+
+        .sidenav {
+
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidenav a {
+            padding: 10px 10px 10px 10px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+            float: left;
+            display: block;
+            color: #ffffff;
+            text-align: center;
+            text-decoration: none;
+
+            font-family: 'Baloo Paaji 2', cursive;
+            padding: 16px 10px;
+
+        }
+
+        .sidenav a:hover {
+            color: #f44b4b;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 30px;
+            margin-left: 50px;
+        }
+
+        body {
+
+
+            background-image: linear-gradient(rgb(255, 210, 0),
+                    rgb(255, 216, 0),
+                    rgba(255, 236, 11, 0.27),
+                    rgba(181, 185, 141, 0.22),
+                    rgba(252, 252, 252, 0.81),
+                    rgb(227, 227, 227),
+                    rgb(255, 255, 255)), url("https://images.unsplash.com/photo-1579820010410-c10411aaaa88?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1374&q=80");
+
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            /* overflow-x: hidden; /* Hide horizontal scrollbar */
+        }
+
+        .responsive {
+            width: 100%;
+            max-width: 100%;
+            height: ;
+
+            float: right;
+
+        }
+
+
+
+        body {
+            color: white;
+            margin-left: 0;
+            margin-right: 0;
+            margin-top: 0;
+            font-size: 28px;
+            font-family: 'Baloo Paaji 2', cursive;
+        }
+
+        .header {
+            background-color: #f44b4b;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .navbartwo {
+            overflow: hidden;
+            background-color: #adadad;
+            position: fixed;
+            bottom: 0;
+            list-style: none;
+            font-weight: bold;
+            float: left;
+            width: 100%;
+            word-spacing: 0px;
+
+            color: #fff;
+            font-size: 20px;
+
+            box-shadow: 0 9px 06px 0 rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid #000000;
+
+            top: 0;
+            position: -webkit-sticky;
+            position: sticky;
+
+            position: -moz-sticky;
+            position: -ms-sticky;
+            position: -o-sticky;
+        }
+
+        .navbartwo a {
+            float: left;
+            display: block;
+            color: #343434;
+            text-align: center;
+            padding: 1px 15px;
+            text-decoration: none;
+
+            font-family: 'Baloo Paaji 2', cursive;
+
+            text-decoration: none;
+        }
+
+        .navbartwo a:hover {
+            background: #e85757;
+            color: black;
+
+        }
+
+        .navbartwo a.active {
+            background-color: #d04545;
+            color: white;
+        }
+
+        #navbar {
+            overflow: visible;
+            list-style: none;
+            font-weight: bold;
+            float: left;
+            width: 100%;
+            word-spacing: 0px;
+            background: #adadad;
+            margin-bottom: %;
+
+            color: #fff;
+            font-size: 20px;
+
+            box-shadow: 0 9px 06px 0 rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid #000000;
+
+            top: 0;
+            position: -webkit-sticky;
+            position: sticky;
+
+            position: -moz-sticky;
+            position: -ms-sticky;
+            position: -o-sticky;
+
+        }
+
+        #navbar a {
+            float: left;
+            display: block;
+            color: #343434;
+            text-align: center;
+            text-decoration: none;
+
+            font-family: 'Baloo Paaji 2', cursive;
+            padding: 17px 8px;
+            text-decoration: none;
+
+        }
+
+        #navbar a:hover {
+            background-color: #f44b4b;
+            color: black;
+        }
+
+        #navbar a.active {
+            background-color: #4b4a4a;
+            color: #f44b4b;
+        }
+
+        .content {
+
+            text-align;
+            font-size: 65%;
+            font-family: 'Baloo Paaji 2', cursive;
+        }
+
+        .sticky {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .sticky+.content {
+            padding-top: 60px;
+        }
+
+        .separator-type,
+        .title-type,
+        .intro-type,
+        .content-type .intro-type p {
+            position: relative;
+        }
+
+        .intro-type .container {
+            padding: 107px 0px 102px 0px !important;
+        }
+
+        .company-heading h1 {
+            margin-bottom: 60px;
+            padding-bottom: 50px;
+            line-height: 80px;
+            color: #fff;
+            font-weight: 700 !important;
+            text-align: center;
+        }
+
+        .jumbo {
+            margin-bottom: 10px;
+            margin-top: 50px;
+        }
+
+        .seo-header,
+        .product-header,
+        .intro-type .container h1.white,
+        .company-heading h1 {
+            font-weight: 100 !important;
+            text-transform: capitalize;
+            font-size: 55px;
+            margin-bottom: 20px;
+        }
+
+
+        img,
+        figure {
+            max-width: 100%;
+        }
+
+
+        section img {
+
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+        }
+
+    </style>
+
+    <title>Carvalho's IT infocenter - Languages - Javascript</title>
+
+    <div class="gradient">
+
+
+        <img style="width: 100%;
+  height: 400%;
+  background-size: cover;" src="https://thelead.io/wp-content/uploads/2019/06/javascript-illustration.png" alt="Nature" class="responsive" width="800" height="400">
+
+
+
+        <div id="navbar">
+
+            <span style="float: left;
+  display: block;
+  color: #343434;
+  text-align: center;
+  text-decoration: none;
+
+font-family: 'Baloo Paaji 2', cursive;
+  padding: 17px 8px;
+  text-decoration: none;
+  font-size: 20px;cursor:pointer" onclick="openNav()">&#9776; Languages</span>
+            <a href="javascript:void(0)">Home</a>
+
+            <a href="javascript:void(0)">About Us</a>
+
+            <a href="javascript:void(0)"> Contact Us</a>
+        </div>
+
+
+
+        <div class="content">
+
+            <div class="main">
+                <section id="section2">
+                    <div class="container jumbo">
+                        <div class="jumbotron">
+
+                            \
+                            <div class="stuck">
+                                <h3>Javascript</h3>
+                            </div>
+
+
+
+
+                            <div class="containertwo">
+                                <div class="containerone">
+                                    <div class="stuck">
+                                        <h3>Higher-Order Functions</h3>
+                                    </div>
+
+                                    <ul>
+                                        <li>
+
+
+                                      <h4>   Introduction</h4>
+We are often unaware of the number of assumptions we make when we communicate with other people in our native languages. If we told you to “count to three,” we would expect you to say or think the numbers one, two and three. We assumed you would know to start with “one” and end with “three”. With programming, we’re faced with needing to be more explicit with our directions to the computer. Here’s how we might tell the computer to “count to three”:</li><br>
+
+for (let i = 1; i<=3; i++) {
+  console.log(i)
+}
+<li> When we speak to other humans, we share a vocabulary that gives us quick ways to communicate complicated concepts. When we say “bake”, it calls to mind a familiar subroutine— preheating an oven, putting something into an oven for a set amount of time, and finally removing it. This allows us to abstract away a lot of the details and communicate key concepts more concisely. Instead of listing all those details, we can say, “We baked a cake,” and still impart all that meaning to you.</li><br>
+
+<li>In programming, we can accomplish “abstraction” by writing functions. In addition to allowing us to reuse our code, functions help to make clear, readable programs. If you encountered countToThree() in a program, you might be able to quickly guess what the function did without having to stop and read the function’s body.</li><br>
+
+<li>We’re also going to learn about another way to add a level of abstraction to our programming: higher-order functions. Higher-order functions are functions that accept other functions as arguments and/or return functions as output. This enables us to build abstractions on other abstractions, just like “We hosted a birthday party” is an abstraction that may build on the abstraction “We made a cake.”</li><br>
+
+<li>In summary, using more abstraction in our code allows us to write more modular code which is easier to read and debug.</li> <br>
+                                    </ul>
+
+                                    <img src="https://food-images.files.bbci.co.uk/food/recipes/girls_birthday_cake_46200_16x9.jpg" alt="cake" class="responsive" width="400" height="200"><br><br>
+
+
+                                    <ul> <strong>1) Functions as Data </strong>
+                                        <li>
+
+                                           
+JavaScript allows the ability to add functions to new variables.</li> <br>
+
+<li>In the below example, we have a lengthy function name.</li> <br>
+
+const announceThatIAmDoingImportantWork = () => {<br>
+    console.log("I’m doing very important work!");<br>
+};<br><br>
+
+<li>The question is if were to want to rename this excessively long function without compromising the source code. We can answer this question by re-assigning the function to a variable with a suitably short name:</li> <br>
+
+const busy = announceThatIAmDoingImportantWork;<br><br>
+
+busy(); // This function call barely takes any space!<br><br>
+                                            
+<li>busy is a variable that holds a reference to our original function. If we could look up the address in memory of busy and the address in memory of announceThatIAmDoingImportantWork they would point to the same place. Our new busy() function can be invoked with parentheses as if that was the name we originally gave our function.</li> <br>
+
+<li>Notice how we assign announceThatIAmDoingImportantWork without parentheses as the value to the busy variable. We want to assign the value of the function itself, not the value it returns when invoked.</li> <br>
+
+<li>In JavaScript, functions are first class objects. In other words, JavaScript functions can have properties and methods.</li> <br>
+
+<li>Since functions are a type of object, they have properties such as .length and .name and methods such as .toString(). You can see more about the methods and properties of functions in <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">the documentation.</a> </li> <br>
+
+<li>Functions are special because we can invoke them, but we can still treat them like any other type of data. Let’s get some practice doing that!</li><br>
+
+
+
+                                    </ul>
+
+                                    <hr>
+
+                                    <ul> <strong>2) Functions as Parameters</strong>
+                                        <li>
+
+
+
+                                     
+Since functions can behave like any other type of data in JavaScript, it might not surprise you to learn that we can also pass functions (into other functions) as parameters. A higher-order function is a function that either accepts functions as parameters, returns a function, or both! We call the functions that get passed in as parameters and invoked callback functions because they get called during the execution of the higher-order function.</li><br>
+<li>
+When we pass a function in as an argument to another function, we don’t invoke it. Invoking the function would evaluate to the return value of that function call. With callbacks, we pass in the function itself by typing the function name without the parentheses (that would evaluate to the result of calling the function):</li><br>
+
+const timeFuncRuntime = funcParameter => {<br>
+   let t1 = Date.now();<br>
+   funcParameter();<br>
+   let t2 = Date.now();<br>
+   return t2 - t1;<br>
+}<br><br>
+
+const addOneToOne = () => 1 + 1;<br><br>
+
+timeFuncRuntime(addOneToOne);<br><br>
+<li>We wrote a higher-order function, timeFuncRuntime(). It takes in a function as an argument, saves a starting time, invokes the callback function, records the time after the function was called, and returns the time the function took to run by subtracting the starting time from the ending time.</li><br>
+
+<li>This higher-order function could be used with any callback function which makes it a potentially powerful piece of code.</li><br>
+<li>
+We then invoked timeFuncRuntime() first with the addOneToOne() function - note how we passed in addOneToOne and did not invoke it.</li><br>
+
+timeFuncRuntime(() => {<br>
+  for (let i = 10; i>0; i--){<br>
+    console.log(i);<br>
+  }<br>
+});<br>
+<li>In this example, we invoked timeFuncRuntime() with an anonymous function that counts backwards from 10. Anonymous functions can be arguments too!</li> <br>
+                                         
+
+                                    </ul>
+
+                                    <hr>
+
+
+
+                                    <ol> <strong><u>Summary </u></strong> <br>
+
+                                        By thinking about functions as data and learning about higher-order functions, you’ve taken important steps in being able to write clean, modular code and take advantage of JavaScript’s flexibility.
+
+Let’s review what we learned in this lesson:<br><br>
+
+ <li>Abstraction allows us to write complicated code in a way that’s easy to reuse, debug, and understand for human readers</li> <br>
+
+ <li>We can work with functions the same way we would any other type of data including reassigning them to new variables</li> <br>
+
+ <li>JavaScript functions are first-class objects, so they have properties and methods like any object</li> <br>
+
+ <li>Functions can be passed into other functions as parameters</li> <br>
+
+ <li>A higher-order function is a function that either accepts functions as parameters, returns a function, or both</li> <br> <br>
+
+                                    </ol>
+
+                                    <div class="pagination" style="text-align: center;">
+                                        <a href="#">&laquo;</a>
+                                        <a href="#">1</a>
+                                        <a href="#">2</a>
+                                        <a href="#">3</a>
+                                        <a href="#">4</a>
+                                        <a href="#">5</a>
+                                        <a href="#">6</a>
+                                        <a href="#">7</a>
+                                        <a class="active" href="#">8</a>
+                                        <a href="#">9</a>
+                                        <a href="#">10</a>
+                                        <a href="#">11</a>
+                                        <a href="#">12</a>
+                                        <a href="#">13</a>
+                                        <a href="#">14</a>
+                                        <a href="#">15</a>
+                                        <a href="#">16</a>
+                                        <a href="#">17</a>
+                                        <a href="#">&raquo;</a>
+                                    </div> <br>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <img src="https://images.unsplash.com/photo-1548611716-3000815a5803?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80" alt="Nature" class="responsive" width="800" height="400">
+
+                    <div id="mySidenav" class="sidenav">
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                        <a href="#">HTML5</a>
+                        <a href="#">CSS3</a>
+                        <a href="#">Javascript</a>
+                        <a href="#">React</a>
+                        <a href="#">Swift</a>
+                    </div>
+
+                    <div class="navbartwo">
+                        <a href="#References">References</a>
+                        <a href="#">Privacy</a>
+
+                    </div>
+
+
+                </section>
+            </div>
+
+        </div>
+
+
+
+</head>
+
+<main>
+
+    <header>
+
+    </header>
+
+    <script>
+        $(document).ready(function() {
+            $("a").on('click', function(event) {
+                if (this.hash !== "") {
+                    event.preventDefault();
+                    var hash = this.hash;
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top
+                    }, 800, function() {
+                        window.location.hash = hash;
+                    });
+                }
+            });
+        });
+
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="scroll-down.js"></script>
+
+    <script>
+        window.onscroll = function() {
+            myFunction()
+        };
+
+        var navbar = document.getElementById("navbar");
+        var sticky = navbar.offsetTop;
+
+        function myFunction() {
+            if (window.pageYOffset >= sticky) {
+                navbar.classList.add("sticky")
+            } else {
+                navbar.classList.remove("sticky");
+            }
+        }
+
+    </script>
+
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "120px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+
+    </script>
+
+    <footer>
+
+
+    </footer>
+
+
+</main>
+
+<body>
+    <script src="js/scripts.js"></script>
+</body>
+
+</html>

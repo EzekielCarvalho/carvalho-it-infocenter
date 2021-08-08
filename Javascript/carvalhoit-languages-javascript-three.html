@@ -1,0 +1,835 @@
+<!-- User Story #1: I can see a main element with a corresponding id="main-doc", which contains the page's main content (technical documentation).
+
+User Story #2: Within the #main-doc element, I can see several section elements, each with a class of main-section. There should be a minimum of 5.
+
+User Story #3: The first element within each .main-section should be a header element which contains text that describes the topic of that section.
+
+User Story #4: Each section element with the class of main-section should also have an id that corresponds with the text of each header contained within it. Any spaces should be replaced with underscores (e.g. The section that contains the header "JavaScript and Java" should have a corresponding id="JavaScript_and_Java").
+
+User Story #5: The .main-section elements should contain at least 10 p elements total (not each).
+
+User Story #6: The .main-section elements should contain at least 5 code elements total (not each).
+
+User Story #7: The .main-section elements should contain at least 5 li items total (not each).
+
+User Story #8: I can see a nav element with a corresponding id="navbar".
+
+User Story #9: The navbar element should contain one header element which contains text that describes the topic of the technical documentation.
+
+User Story #10: Additionally, the navbar should contain link (a) elements with the class of nav-link. There should be one for every element with the class main-section.
+
+User Story #11: The header element in the navbar must come before any link (a) elements in the navbar.
+
+User Story #12: Each element with the class of nav-link should contain text that corresponds to the header text within each section (e.g. if you have a "Hello world" section/header, your navbar should have an element which contains the text "Hello world").
+
+User Story #13: When I click on a navbar element, the page should navigate to the corresponding section of the main-doc element (e.g. If I click on a nav-link element that contains the text "Hello world", the page navigates to a section element that has that id and contains the corresponding header.
+
+User Story #14: On regular sized devices (laptops, desktops), the element with id="navbar" should be shown on the left side of the screen and should always be visible to the user.
+
+User Story #15: My Technical Documentation page should use at least one media query. -->
+
+
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2&display=swap" rel="stylesheet">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .pagination a {
+            color: white;
+            float: none;
+            padding: 10px 20px;
+            text-decoration: none;
+            transition: background-color .3s;
+        }
+
+        .pagination a.active {
+            background-color: #ffcb1e;
+            color: #030303;
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: #000000;
+        }
+
+        div.stuck {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            background-color: #ffeb00;
+            padding: 1px;
+            font-size: 20px;
+            text-align: center;
+            color: #343434;
+
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .containerone {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .containertwo {
+            padding: px;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+
+        .sidenav {
+
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidenav a {
+            padding: 10px 10px 10px 10px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+            float: left;
+            display: block;
+            color: #ffffff;
+            text-align: center;
+            text-decoration: none;
+
+            font-family: 'Baloo Paaji 2', cursive;
+            padding: 16px 10px;
+
+        }
+
+        .sidenav a:hover {
+            color: #f44b4b;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 30px;
+            margin-left: 50px;
+        }
+
+        body {
+
+
+            background-image: linear-gradient(rgb(255, 210, 0),
+                    rgb(255, 216, 0),
+                    rgba(255, 236, 11, 0.27),
+                    rgba(181, 185, 141, 0.22),
+                    rgba(252, 252, 252, 0.81),
+                    rgb(227, 227, 227),
+                    rgb(255, 255, 255)), url("https://images.unsplash.com/photo-1579820010410-c10411aaaa88?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1374&q=80");
+
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            /* overflow-x: hidden; /* Hide horizontal scrollbar */
+        }
+
+        .responsive {
+            width: 100%;
+            max-width: 100%;
+            height: ;
+
+            float: right;
+
+        }
+
+
+
+        body {
+            color: white;
+            margin-left: 0;
+            margin-right: 0;
+            margin-top: 0;
+            font-size: 28px;
+            font-family: 'Baloo Paaji 2', cursive;
+        }
+
+        .header {
+            background-color: #f44b4b;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .navbartwo {
+            overflow: hidden;
+            background-color: #adadad;
+            position: fixed;
+            bottom: 0;
+            list-style: none;
+            font-weight: bold;
+            float: left;
+            width: 100%;
+            word-spacing: 0px;
+
+            color: #fff;
+            font-size: 20px;
+
+            box-shadow: 0 9px 06px 0 rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid #000000;
+
+            top: 0;
+            position: -webkit-sticky;
+            position: sticky;
+
+            position: -moz-sticky;
+            position: -ms-sticky;
+            position: -o-sticky;
+        }
+
+        .navbartwo a {
+            float: left;
+            display: block;
+            color: #343434;
+            text-align: center;
+            padding: 1px 15px;
+            text-decoration: none;
+
+            font-family: 'Baloo Paaji 2', cursive;
+
+            text-decoration: none;
+        }
+
+        .navbartwo a:hover {
+            background: #e85757;
+            color: black;
+
+        }
+
+        .navbartwo a.active {
+            background-color: #d04545;
+            color: white;
+        }
+
+        #navbar {
+            overflow: visible;
+            list-style: none;
+            font-weight: bold;
+            float: left;
+            width: 100%;
+            word-spacing: 0px;
+            background: #adadad;
+            margin-bottom: %;
+
+            color: #fff;
+            font-size: 20px;
+
+            box-shadow: 0 9px 06px 0 rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid #000000;
+
+            top: 0;
+            position: -webkit-sticky;
+            position: sticky;
+
+            position: -moz-sticky;
+            position: -ms-sticky;
+            position: -o-sticky;
+
+        }
+
+        #navbar a {
+            float: left;
+            display: block;
+            color: #343434;
+            text-align: center;
+            text-decoration: none;
+
+            font-family: 'Baloo Paaji 2', cursive;
+            padding: 17px 8px;
+            text-decoration: none;
+
+        }
+
+        #navbar a:hover {
+            background-color: #f44b4b;
+            color: black;
+        }
+
+        #navbar a.active {
+            background-color: #4b4a4a;
+            color: #f44b4b;
+        }
+
+        .content {
+
+            text-align: justify-all;
+            font-size: 65%;
+            font-family: 'Baloo Paaji 2', cursive;
+        }
+
+        .sticky {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .sticky+.content {
+            padding-top: 60px;
+        }
+
+        .separator-type,
+        .title-type,
+        .intro-type,
+        .content-type .intro-type p {
+            position: relative;
+        }
+
+        .intro-type .container {
+            padding: 107px 0px 102px 0px !important;
+        }
+
+        .company-heading h1 {
+            margin-bottom: 60px;
+            padding-bottom: 50px;
+            line-height: 80px;
+            color: #fff;
+            font-weight: 700 !important;
+            text-align: center;
+        }
+
+        .jumbo {
+            margin-bottom: 10px;
+            margin-top: 50px;
+        }
+
+        .seo-header,
+        .product-header,
+        .intro-type .container h1.white,
+        .company-heading h1 {
+            font-weight: 100 !important;
+            text-transform: capitalize;
+            font-size: 55px;
+            margin-bottom: 20px;
+        }
+
+
+        img,
+        figure {
+            max-width: 100%;
+        }
+
+
+        section img {
+
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+
+    <title>Carvalho's IT infocenter - Languages - Javascript</title>
+
+    <div class="gradient">
+
+
+        <img style="width: 100%;
+  height: 400%;
+  background-size: cover;" src="https://thelead.io/wp-content/uploads/2019/06/javascript-illustration.png" alt="Nature" class="responsive" width="800" height="400">
+
+
+
+        <div id="navbar">
+
+            <span style="float: left;
+  display: block;
+  color: #343434;
+  text-align: center;
+  text-decoration: none;
+
+font-family: 'Baloo Paaji 2', cursive;
+  padding: 17px 8px;
+  text-decoration: none;
+  font-size: 20px;cursor:pointer" onclick="openNav()">&#9776; Languages</span>
+            <a href="javascript:void(0)">Home</a>
+
+            <a href="javascript:void(0)">About Us</a>
+
+            <a href="javascript:void(0)"> Contact Us</a>
+        </div>
+
+
+
+        <div class="content">
+
+            <div class="main">
+                <section id="section2">
+                    <div class="container jumbo">
+                        <div class="jumbotron">
+
+                            \
+                            <div class="stuck">
+                                <h3>Javascript</h3>
+                            </div>
+
+
+
+
+                            <div class="containertwo">
+                                <div class="containerone">
+                                    <div class="stuck">
+                                        <h3>Conditional Statements</h3>
+                                    </div>
+
+                                    <ul> <strong>1) What are Conditional Statements? </strong>
+                                        <li>
+                                            In our daily lives, we tend to make decisions based on circustances that involve conditional scenarios. These are basically if-then-else scenarios. </li> <br>
+
+                                        <li>These if-else decisions can be modeled in code by making conditional statements. A conditional statement checks specific condition(s) and performs a task based on the condition(s).</li> <br>
+
+                                        <li>In this lesson we will explore how programs make decisions by evaluating conditions and introduce logic into our code! We’ll be covering the following concepts:</li> <br>
+
+                                        <li>if, else if, and else statements.</li>
+                                        <li>comparison operators.</li>
+                                        <li>logical operators.</li>
+                                        <li>truthy vs falsy values.</li>
+                                        <li>ternary operators.</li>
+                                        <li>the switch statement.</li> <br>
+
+
+                                    </ul>
+
+                                    <hr>
+
+                                    <ul> <strong>2) The if keyword </strong>
+                                        <li>
+                                            Frequently, we carry out tasks based on conditions that occur. Such a logic can also be applied in computer programming using the if keyword conditional statement. Check the following example: </li> <br>
+
+                                        if (true) {
+                                        console.log('This message will print!');
+                                        } <br>
+                                        // Prints "This message will print!"<br><br>
+                                        Notice in the example above, we have an if statement. The if statement is composed of:<br><br>
+
+                                        <li>The if keyword followed by a set of parentheses () which is followed by a code block, or block statement, indicated by a set of curly braces {}.</li><br>
+                                        <li>Inside the parentheses (), a condition is provided that evaluates to true or false.</li><br>
+                                        <li>If the condition evaluates to true, the code inside the curly braces {} runs, or executes.</li><br>
+                                        <li>If the condition evaluates to false, the block won’t execute.</li><br>
+
+                                    </ul>
+
+                                    <hr>
+
+                                    <ul> <strong>3) If...Else Statements </strong>
+                                        <li>
+
+
+                                        <li> Previously, we dealt with using the "if" statement, but without any sort of condition per se. Now, we shall deal with adding a "else" condition so that if the if statement has an opposing return, we would get the computer to do another action instead. Check the following examples: </li> <br>
+
+                                        if (false) {
+                                        console.log('The code in this block will not run.');
+                                        }<br> else {
+                                        console.log('But the code in this block will!');
+                                        }<br>
+                                        // Prints "But the code in this block will!" <br><br>
+                                        <li>An else statement must be paired with an if statement, and together they are referred to as an if...else statement. In the example above, the else statement:</li><br>
+
+                                        <li>Uses the else keyword following the code block of an if statement.</li><br>
+                                        <li>Has a code block that is wrapped by a set of curly braces {}.</li><br>
+                                        <li>The code inside the else statement code block will execute when the if statement’s condition evaluates to false.</li><br>
+                                        <li>if...else statements allow us to automate solutions to yes-or-no questions, also known as binary decisions.</li><br>
+
+                                    </ul>
+
+                                    <hr>
+
+
+                                    <ul> <strong>3) Comparison Operators </strong>
+                                        <li>
+                                            When writing conditional statements, sometimes we need to use different types of operators to compare values. These operators are called comparison operators. </li><br>
+
+                                        <li>Here is a list of some handy comparison operators and their syntax:</li><br>
+
+                                        Less than: < <br>
+                                            Greater than: ><br>
+                                            Less than or equal to: <= <br>
+                                                Greater than or equal to: >=<br>
+                                                Is equal to: === <br>
+                                                Is NOT equal to: !== <br>
+                                                <li>Comparison operators compare the value on the left with the value on the right. For instance:</li><br>
+
+                                                10 < 12 <br> // Evaluates to true
+                                                    It can be helpful to think of comparison statements as questions. When the answer is “yes”, the statement evaluates to true, and when the answer is “no”, the statement evaluates to false. The code above would be asking: is 10 less than 12? Yes! So 10 < 12 evaluates to true.<br><br>
+
+                                                        <li>We can also use comparison operators on different data types like strings:</li><br>
+
+                                                        'apples' === 'oranges'<br> // false <br><br>
+                                                        <li>In the example above, we’re using the identity operator (===) to check if the string 'apples' is the same as the string 'oranges'. Since the two strings are not the same, the comparison statement evaluates to false.</li><br>
+
+                                                        <li>All comparison statements evaluate to either true or false and are made up of:</li><br>
+
+                                                        <li>Two values that will be compared.
+                                                            An operator that separates the values and compares them accordingly</li> (>, <, <=,>=,===,!==). <br><br>
+
+                                    </ul>
+
+                                    <hr>
+
+                                    <ul> <strong>4) Logical Operators </strong>
+                                        <li>
+                                            These are used in conditional statements to add further logic to your code. </li><br>
+
+                                        <li> Logical operators are operators that work with boolean values. There are three logical operators:</li><br>
+
+                                        the and operator (&&)<br>
+                                        the or operator (||)<br>
+                                        the not operator, otherwise known as the bang operator (!)<br>
+                                        When we use the && operator, we are checking that two things are true:<br><br>
+
+                                        if (stopLight === 'green' && pedestrians === 0) {
+                                        console.log('Go!');
+                                        } else {
+                                        console.log('Stop');
+                                        }
+                                        <li>When using the && operator, both conditions must evaluate to true for the entire condition to evaluate to true and execute. Otherwise, if either condition is false, the && condition will evaluate to false and the else block will execute.</li><br>
+
+                                        <li>If we only care about either condition being true, we can use the || operator:</li><br>
+
+                                        if (day === 'Saturday' || day === 'Sunday') {
+                                        console.log('Enjoy the weekend!');
+                                        } else {
+                                        console.log('Do some work.');
+                                        }<br><br>
+                                        <li>When using the || operator, only one of the conditions must evaluate to true for the overall statement to evaluate to true. In the code example above, if either day === 'Saturday' or day === 'Sunday' evaluates to true the if‘s condition will evaluate to true and its code block will execute. If the first condition in an || statement evaluates to true, the second condition won’t even be checked. Only if day === 'Saturday' evaluates to false will day === 'Sunday' be evaluated. The code in the else statement above will execute only if both comparisons evaluate to false.</li><br>
+
+                                        <li>The ! not operator reverses, or negates, the value of a boolean:</li>
+
+                                        let excited = true;
+                                        console.log(!excited); <br>// Prints false<br><br>
+
+                                        let sleepy = false;
+                                        console.log(!sleepy); <br>// Prints true
+                                        <li>Essentially, the ! operator will either take a true value and pass back false, or it will take a false value and pass back true.</li><br><br>
+
+                                    </ul>
+
+                                    <hr>
+
+                                    <ul> <strong>5) Truthy and Falsy </strong>
+
+
+                                        <li> Now, we shall consider data that are of non-boolean types such as strings or numbers and how they react when checked inside a condition. </li><br>
+
+
+                                        <li> You may want to check if a variable is existent but may not want it to equal to any value. You may want to see if the variable has been given a value.</li><br>
+
+
+                                        Here’s an example:<br>
+
+
+                                        let myVariable = 'I Exist!';<br>
+
+                                        if (myVariable) {
+                                        console.log(myVariable)
+                                        } else {
+                                        console.log('The variable does not exist.')
+                                        }<br>
+                                        <br>
+
+                                        <li>The code block in the if statement will run because myVariable has a truthy value; even though the value of myVariable is not explicitly the value true, when used in a boolean or conditional context, it evaluates to true because it has been assigned a non-falsy value.</li><br>
+
+
+                                        <li>So which values are falsy— or evaluate to false when checked as a condition? The list of falsy values includes:</li><br>
+
+
+                                        <li>0</li>
+                                        <li>Empty strings like "" or ''</li>
+                                        <li>null which represent when there is no value at all</li>
+                                        <li>undefined which represent when a declared variable lacks a value</li>
+                                        <li>NaN, or Not a Number</li>
+                                        <li>Here’s an example with numbers:</li>
+
+                                        let numberOfApples = 0;<br>
+
+
+                                        if (numberOfApples){
+                                        console.log('Let us eat apples!');
+                                        } <br>
+                                        else {
+                                        console.log('No apples left!');
+                                        }<br>
+
+
+                                        // Prints 'No apples left!'<br>
+                                        <br>
+
+                                        <li>The condition evaluates to false because the value of the numberOfApples is 0. Since 0 is a falsy value, the code block in the else statement will run.</li><br>
+
+
+                                    </ul>
+
+                                    <hr>
+
+                                    <ul> <strong>5) Ternary Operator</strong>
+                                        <li>If we consider truthy and falsy evaluations, if we use logical operators, we can use a short-hand for code. Consider this example:</li><br>
+
+                                        let defaultName;<br>
+                                        if (username) {
+                                        defaultName = username;
+                                        } <br> else {
+                                        defaultName = 'Stranger';
+                                        }<br><br>
+
+                                        <li> From the above example, we can use the logical operator || for "or":</li><br>
+
+                                        let defaultName = username || 'Stranger';<br><br>
+
+                                        <li> Because || or statements check the left-hand condition first, the variable defaultName will be assigned the actual value of username if is truthy, and it will be assigned the value of 'Stranger' if username is falsy. This concept is also referred to as <strong> short-circuit evaluation. </strong></li><br>
+
+
+                                        <li> In the hindsigh of short-circuit evaluation or short-hand syntax, we can use the ternary operator to simplify an if...else statement.</li><br>
+
+                                        Take a look at the if...else statement example:<br><br>
+
+                                        let isNightTime = true;<br><br>
+
+                                        if (isNightTime)<br> {
+                                        console.log('Turn on the lights!');
+                                        } <br> else {
+                                        console.log('Turn off the lights!');
+                                        }
+                                        <br><br>
+                                        <li>We can use a ternary operator to perform the same functionality:</li><br>
+
+                                        isNightTime ? console.log('Turn on the lights!')<br> : console.log('Turn off the lights!');<br><br>
+                                        In the example above:<br><br>
+
+                                        <li>The condition, isNightTime, is provided before the ?.
+                                            Two expressions follow the ? and are separated by a colon :.
+                                            If the condition evaluates to true, the first expression executes.
+                                            If the condition evaluates to false, the second expression executes.
+                                            Like if...else statements, ternary operators can be used for conditions which evaluate to true or false.</li><br>
+
+                                    </ul>
+
+                                    <hr>
+
+                                    <ul> <strong>6) Else If Statements</strong>
+                                        <li>
+                                            If you want to add more conditions to your "If Else" clause, you can do so by introducing the "Else If" operator. </li><br>
+
+                                        <li>The "Else If" statement is supposed to be inserted just after the If operator and just before the Else operator for the syntax to be correct. Let's look at this example:</li><br>
+
+                                        let stopLight = 'yellow';<br><br>
+
+                                        if (stopLight === 'red') {
+                                        console.log('Stop!');
+                                        }<br> else if (stopLight === 'yellow') {
+                                        console.log('Slow down.');
+                                        }<br> else if (stopLight === 'green') {
+                                        console.log('Go!');
+                                        }<br> else {
+                                        console.log('Caution, unknown!');
+                                        }<br><br>
+                                        <li>The else if statements allow you to have multiple possible outcomes. if/else if/else statements are read from top to bottom, so the first condition that evaluates to true from the top to bottom is the block that gets executed.</li><br>
+
+                                        <li>In the example above, since stopLight === 'red' evaluates to false and stopLight === 'yellow' evaluates to true, the code inside the first else if statement is executed. The rest of the conditions are not evaluated. If none of the conditions evaluated to true, then the code in the else statement would have executed. </li> <br>
+
+                                    </ul>
+
+                                    <hr>
+
+                                    <ul> <strong>7) The switch keyword</strong>
+                                        <li>
+                                            Else if statements are pretty useful, but only in the sense that we don't have a lot of data to feed in. The whole idea gets toppled over if we would have to fill in hundreds of entries. Consider the following example:</li> <br>
+
+                                        let groceryItem = 'papaya';<br><br>
+
+                                        if (groceryItem === 'tomato')<br> {
+                                        console.log('Tomatoes are $0.49');
+                                        } <br>else if (groceryItem === 'papaya'){
+                                        console.log('Papayas are $1.29');
+                                        } <br>else {
+                                        console.log('Invalid item');
+                                        }<br><br>
+                                        <li>As can be noted from the above example. It would be insipid to have to make multiple entries. This is where are simple syntax comes in, as exemplified below:</li> <br>
+
+                                        let groceryItem = 'papaya';<br>
+
+                                        switch (groceryItem)<br> {
+                                        case 'tomato':<br>
+                                        console.log('Tomatoes are $0.49');<br>
+                                        break;<br>
+                                        case 'lime':<br>
+                                        console.log('Limes are $1.49');<br>
+                                        break;<br>
+                                        case 'papaya':<br>
+                                        console.log('Papayas are $1.29');<br>
+                                        break;<br>
+                                        default:<br>
+                                        console.log('Invalid item');<br>
+                                        break;
+                                        }<br><br>
+
+                                        // Prints 'Papayas are $1.29'<br>
+                                        <li>The switch keyword initiates the statement and is followed by ( ... ), which contains the value that each case will compare. In the example, the value or expression of the switch statement is groceryItem.</li> <br>
+                                        <li>Inside the block, { ... }, there are multiple cases. The case keyword checks if the expression matches the specified value that comes after it. The value following the first case is 'tomato'. If the value of groceryItem equalled 'tomato', that case‘s console.log() would run.</li> <br>
+                                        <li>The value of groceryItem is 'papaya', so the third case runs— Papayas are $1.29 is logged to the console.</li> <br>
+                                        <li>The break keyword tells the computer to exit the block and not execute any more code or check any other cases inside the code block. Note: Without the break keyword at the end of each case, the program would execute the code for all matching cases and the default code as well. This behavior is different from if/else conditional statements which execute only one block of code.</li> <br>
+                                        <li>At the end of each switch statement, there is a default statement. If none of the cases are true, then the code in the default statement will run.</li> <br>
+
+                                    </ul>
+
+                                    <hr>
+
+                                    <ol> <strong><u>Summary </u></strong> <br>
+                                        <li>
+
+
+                                            Here is a brief summary of whatever we've learned in this section:</li>
+
+                                        <li>An if statement checks a condition and will execute a task if that condition evaluates to true.</li>
+                                        <li>if...else statements make binary decisions and execute different code blocks based on a provided condition.</li>
+                                        <li>We can add more conditions using else if statements.</li>
+                                        <li>Comparison operators, including <,>, <= ,>=, ===, and !== can compare two values.</li>
+                                        <li>The logical and operator, &&, or “and”, checks if both provided expressions are truthy.</li>
+                                        <li>The logical operator ||, or “or”, checks if either provided expression is truthy.</li>
+                                        <li>The bang operator, !, switches the truthiness and falsiness of a value.</li>
+                                        <li>The ternary operator is shorthand to simplify concise if...else statements.</li>
+                                        <li>A switch statement can be used to simplify the process of writing multiple else if statements. The break keyword stops the remaining cases from being checked and executed in a switch statement.</li> <br> <br>
+
+                                    </ol>
+
+                                    <div class="pagination" style="text-align: center;">
+                                        <a href="#">&laquo;</a>
+                                        <a class="active" href="#">1</a>
+                                        <a href="#">2</a>
+                                        <a href="#">3</a>
+                                        <a href="#">4</a>
+                                        <a href="#">5</a>
+                                        <a href="#">6</a>
+                                        <a href="#">7</a>
+                                        <a href="#">8</a>
+                                        <a href="#">9</a>
+                                        <a href="#">10</a>
+                                        <a href="#">11</a>
+                                        <a href="#">12</a>
+                                        <a href="#">13</a>
+                                        <a href="#">14</a>
+                                        <a href="#">15</a>
+                                        <a href="#">16</a>
+                                        <a href="#">17</a>
+                                        <a href="#">&raquo;</a>
+                                    </div> <br>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <img src="https://images.unsplash.com/photo-1548611716-3000815a5803?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80" alt="Nature" class="responsive" width="800" height="400">
+
+                    <div id="mySidenav" class="sidenav">
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                        <a href="#">HTML5</a>
+                        <a href="#">CSS3</a>
+                        <a href="#">Javascript</a>
+                        <a href="#">React</a>
+                        <a href="#">Swift</a>
+                    </div>
+
+                    <div class="navbartwo">
+                        <a href="#References" class="active">References</a>
+                        <a href="#">Privacy</a>
+
+                    </div>
+
+
+                </section>
+            </div>
+
+        </div>
+
+
+
+</head>
+
+<main>
+
+    <header>
+
+    </header>
+
+    <script>
+        $(document).ready(function() {
+            $("a").on('click', function(event) {
+                if (this.hash !== "") {
+                    event.preventDefault();
+                    var hash = this.hash;
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top
+                    }, 800, function() {
+                        window.location.hash = hash;
+                    });
+                }
+            });
+        });
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="scroll-down.js"></script>
+
+    <script>
+        window.onscroll = function() {
+            myFunction()
+        };
+
+        var navbar = document.getElementById("navbar");
+        var sticky = navbar.offsetTop;
+
+        function myFunction() {
+            if (window.pageYOffset >= sticky) {
+                navbar.classList.add("sticky")
+            } else {
+                navbar.classList.remove("sticky");
+            }
+        }
+    </script>
+
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "120px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+    </script>
+
+    <footer>
+
+
+    </footer>
+
+
+</main>
+
+<body>
+    <script src="js/scripts.js"></script>
+</body></html>

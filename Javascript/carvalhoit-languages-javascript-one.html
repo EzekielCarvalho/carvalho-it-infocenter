@@ -1,0 +1,831 @@
+<!-- User Story #1: I can see a main element with a corresponding id="main-doc", which contains the page's main content (technical documentation).
+
+User Story #2: Within the #main-doc element, I can see several section elements, each with a class of main-section. There should be a minimum of 5.
+
+User Story #3: The first element within each .main-section should be a header element which contains text that describes the topic of that section.
+
+User Story #4: Each section element with the class of main-section should also have an id that corresponds with the text of each header contained within it. Any spaces should be replaced with underscores (e.g. The section that contains the header "JavaScript and Java" should have a corresponding id="JavaScript_and_Java").
+
+User Story #5: The .main-section elements should contain at least 10 p elements total (not each).
+
+User Story #6: The .main-section elements should contain at least 5 code elements total (not each).
+
+User Story #7: The .main-section elements should contain at least 5 li items total (not each).
+
+User Story #8: I can see a nav element with a corresponding id="navbar".
+
+User Story #9: The navbar element should contain one header element which contains text that describes the topic of the technical documentation.
+
+User Story #10: Additionally, the navbar should contain link (a) elements with the class of nav-link. There should be one for every element with the class main-section.
+
+User Story #11: The header element in the navbar must come before any link (a) elements in the navbar.
+
+User Story #12: Each element with the class of nav-link should contain text that corresponds to the header text within each section (e.g. if you have a "Hello world" section/header, your navbar should have an element which contains the text "Hello world").
+
+User Story #13: When I click on a navbar element, the page should navigate to the corresponding section of the main-doc element (e.g. If I click on a nav-link element that contains the text "Hello world", the page navigates to a section element that has that id and contains the corresponding header.
+
+User Story #14: On regular sized devices (laptops, desktops), the element with id="navbar" should be shown on the left side of the screen and should always be visible to the user.
+
+User Story #15: My Technical Documentation page should use at least one media query. -->
+
+
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2&display=swap" rel="stylesheet">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .pagination a {
+            color: white;
+            float: none;
+            padding: 10px 20px;
+            text-decoration: none;
+            transition: background-color .3s;
+        }
+
+        .pagination a.active {
+            background-color: #ffcb1e;
+            color: #030303;
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: #000000;
+        }
+
+        div.stuck {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            background-color: #ffeb00;
+            padding: 1px;
+            font-size: 20px;
+            text-align: center;
+            color: #343434;
+
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .containerone {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .containertwo {
+            padding: 1px;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+
+        .sidenav {
+
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidenav a {
+            padding: 10px 10px 10px 10px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+            float: left;
+            display: block;
+            color: #ffffff;
+            text-align: center;
+            text-decoration: none;
+
+            font-family: 'Baloo Paaji 2', cursive;
+            padding: 16px 10px;
+
+        }
+
+        .sidenav a:hover {
+            color: #f44b4b;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 30px;
+            margin-left: 50px;
+        }
+
+        body {
+
+
+            background-image: linear-gradient(rgb(255, 210, 0),
+                    rgb(255, 216, 0),
+                    rgba(255, 236, 11, 0.27),
+                    rgba(181, 185, 141, 0.22),
+                    rgba(252, 252, 252, 0.81),
+                    rgb(227, 227, 227),
+                    rgb(255, 255, 255)), url("https://images.unsplash.com/photo-1579820010410-c10411aaaa88?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1374&q=80");
+
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            /* overflow-x: hidden; /* Hide horizontal scrollbar */
+        }
+
+        .responsive {
+            width: 100%;
+            max-width: 100%;
+            height: ;
+
+            float: right;
+
+        }
+
+
+
+        body {
+            color: white;
+            margin-left: 0;
+            margin-right: 0;
+            margin-top: 0;
+            font-size: 28px;
+            font-family: 'Baloo Paaji 2', cursive;
+        }
+
+        .header {
+            background-color: #f44b4b;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .navbartwo {
+            overflow: hidden;
+            background-color: #adadad;
+            position: fixed;
+            bottom: 0;
+            list-style: none;
+            font-weight: bold;
+            float: left;
+            width: 100%;
+            word-spacing: 0px;
+
+            color: #fff;
+            font-size: 20px;
+
+            box-shadow: 0 9px 06px 0 rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid #000000;
+
+            top: 0;
+            position: -webkit-sticky;
+            position: sticky;
+
+            position: -moz-sticky;
+            position: -ms-sticky;
+            position: -o-sticky;
+        }
+
+        .navbartwo a {
+            float: left;
+            display: block;
+            color: #343434;
+            text-align: center;
+            padding: 1px 15px;
+            text-decoration: none;
+
+            font-family: 'Baloo Paaji 2', cursive;
+
+            text-decoration: none;
+        }
+
+        .navbartwo a:hover {
+            background: #e85757;
+            color: black;
+
+        }
+
+        .navbartwo a.active {
+            background-color: #d04545;
+            color: white;
+        }
+
+        #navbar {
+            overflow: visible;
+            list-style: none;
+            font-weight: bold;
+            float: left;
+            width: 100%;
+            word-spacing: 0px;
+            background: #adadad;
+            margin-bottom: %;
+
+            color: #fff;
+            font-size: 20px;
+
+            box-shadow: 0 9px 06px 0 rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid #000000;
+
+            top: 0;
+            position: -webkit-sticky;
+            position: sticky;
+
+            position: -moz-sticky;
+            position: -ms-sticky;
+            position: -o-sticky;
+
+        }
+
+        #navbar a {
+            float: left;
+            display: block;
+            color: #343434;
+            text-align: center;
+            text-decoration: none;
+
+            font-family: 'Baloo Paaji 2', cursive;
+            padding: 17px 8px;
+            text-decoration: none;
+
+        }
+
+        #navbar a:hover {
+            background-color: #f44b4b;
+            color: black;
+        }
+
+        #navbar a.active {
+            background-color: #4b4a4a;
+            color: #f44b4b;
+        }
+
+        .content {
+
+            text-align: justify-all;
+            font-size: 65%;
+            font-family: 'Baloo Paaji 2', cursive;
+        }
+
+        .sticky {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .sticky+.content {
+            padding-top: 60px;
+        }
+
+        .separator-type,
+        .title-type,
+        .intro-type,
+        .content-type .intro-type p {
+            position: relative;
+        }
+
+        .intro-type .container {
+            padding: 107px 0px 102px 0px !important;
+        }
+
+        .company-heading h1 {
+            margin-bottom: 60px;
+            padding-bottom: 50px;
+            line-height: 80px;
+            color: #fff;
+            font-weight: 700 !important;
+            text-align: center;
+        }
+
+        .jumbo {
+            margin-bottom: 10px;
+            margin-top: 50px;
+        }
+
+        .seo-header,
+        .product-header,
+        .intro-type .container h1.white,
+        .company-heading h1 {
+            font-weight: 100 !important;
+            text-transform: capitalize;
+            font-size: 55px;
+            margin-bottom: 20px;
+        }
+
+
+        img,
+        figure {
+            max-width: 100%;
+        }
+
+
+        section img {
+
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+
+    <title>Carvalho's IT infocenter - Languages - Javascript</title>
+
+    <div class="gradient">
+
+
+        <img style="width: 100%;
+  height: 400%;
+  background-size: cover;" src="https://thelead.io/wp-content/uploads/2019/06/javascript-illustration.png" alt="Nature" class="responsive" width="800" height="400">
+
+
+
+        <div id="navbar">
+
+            <span style="float: left;
+  display: block;
+  color: #343434;
+  text-align: center;
+  text-decoration: none;
+
+font-family: 'Baloo Paaji 2', cursive;
+  padding: 17px 8px;
+  text-decoration: none;
+  font-size: 20px;cursor:pointer" onclick="openNav()">&#9776; Languages</span>
+            <a href="javascript:void(0)">Home</a>
+
+            <a href="javascript:void(0)">About Us</a>
+
+            <a href="javascript:void(0)"> Contact Us</a>
+        </div>
+
+
+
+        <div class="content">
+
+            <div class="main">
+                <section id="section2">
+                    <div class="container jumbo">
+                        <div class="jumbotron">
+
+                            <div class="containerone">
+                                <h2 style="text-align: center;"> <strong> Javascript </strong></h2>
+                            </div>
+                            <div class="stuck">
+                                <h3>What is Javascript?</h3>
+                            </div>
+
+                            <div class="containerone">
+                                <p style=" padding: 10px;
+  margin-left: 5%;
+    margin-right: 5%;">JavaScript is primarily known as the language of most modern web browsers. It was it's early oddities that gave it a bad name. Nevertheless, the language has continued to develop and improve. JavaScript is a powerful, flexible, and fast programming language now being used for increasingly complex web development and beyond! Moreover, it’s often the first language learned by self-taught coders eager to learn and build. JavaScript powers the dynamic behavior on most websites, thus you can see it's prominence. <br><br>
+
+                                    JavaScript was primarily created to make pages living, basically.
+
+                                    The scripts in this language are the programs. They can be written right in a web page’s HTML and run automatically as the page loads.
+
+                                    Scripts are provided and executed as plain text. They don’t need special preparation or compilation to run.
+
+                                    In this aspect, JavaScript is very different from another language called Java, which is another popular language. </p>
+                            </div>
+                            <div class="containerone">
+
+                                <p style=" padding: 10px;
+  margin-left: 5%;
+    margin-right: 5%;">JavaScript is the programming language of HTML and the Web and is easy to learn. JavaScript and Java are completely different languages, both in concept and design.
+
+                                    JavaScript was invented by Brendan Eich in 1995, and became an ECMA standard in 1997.
+                                    ECMA-262 is the official name of the standard. ECMAScript is the official name of the language.</p>
+                            </div>
+                            <div class="containerone">
+                                <div class="stuck">
+                                    <h3>Reasons for the name "Javascript"</h3>
+                                </div>
+                                <p style=" padding: 10px;
+  margin-left: 5%;
+    margin-right: 5%;">When JavaScript was created, it initially had another name: “LiveScript”. But Java was very popular at that time, so it was decided that positioning a new language as a “younger brother” of Java would help.
+
+                                    But as it evolved, JavaScript became a fully independent language with its own specification called ECMAScript, and now it has no relation to Java at all. <br><br>
+
+                                    Javascript can be executed not only in the web browser but also on the server, or on any device that has the program called Javascript engine installed in it. <br> <br>
+
+                                    The browser has an embedded engine sometimes called a “JavaScript virtual machine”.
+
+                                    Different engines have different “codenames”. For example:
+
+                                    V8 – in Chrome and Opera.
+                                    SpiderMonkey – in Firefox.
+                                    …There are other codenames like “Trident” and “Chakra” for different versions of IE, “ChakraCore” for Microsoft Edge, “Nitro” and “SquirrelFish” for Safari, etc.
+                                    The terms above are good to remember because they are used in developer articles on the internet. We’ll use them too. For instance, if “a feature X is supported by V8”, then it probably works in Chrome and Opera.</p>
+                            </div>
+                            <div class="containerone">
+                                <div class="stuck">
+                                    <h3>Abilities of the in-browser Javascript</h3>
+                                </div>
+                                <p style=" padding: 10px;
+  margin-left: 5%;
+    margin-right: 5%;">Modern JavaScript while being a safe language was mainly made for browsers which do not require high level access to RAM or CPU.
+
+                                    The power and abilities of javaScript depend on the environment it’s executing in.
+
+                                    In-browser JavaScript can do everything related to webpage manipulation, interaction with the user, and the webserver.
+
+                                    For instance, in-browser JavaScript is able to:
+
+                                    Add new HTML to the page, change the existing content, modify styles.
+                                    React to user actions, run on mouse clicks, pointer movements, key presses.
+                                    Send requests over the network to remote servers, download and upload files (so-called AJAX and COMET technologies).
+                                </p>
+                            </div>
+                            <div class="containerone">
+                                <div class="stuck">
+                                    <h3>Inabilities of the in-browser Javascript</h3>
+                                </div>
+                                <p style=" padding: 10px;
+  margin-left: 5%;
+    margin-right: 5%;"> In order to keep the user safe, there are tasks which in-browser Javascript are unable to perform. The goal here is to prevent an evil webpage from accessing private information or harming the user’s data. Privacy is at stake once you begin to manipulate and use Javascript, and hence to protect sensitive data of individual users, there are functions that are sort of disabled within browsers that use Javscript. <br> <br>
+
+                                    Examples of such restrictions include: <br> <br>
+
+                                    JavaScript on a webpage may not read/write arbitrary files on the hard disk, copy them or execute programs. It has no direct access to OS functions.<br><br>
+
+                                    Modern browsers allow it to work with files, but the access is limited and only provided if the user does certain actions, like “dropping” a file into a browser window or selecting it via an input tag. <br> <br>
+
+                                    There are ways to interact with camera/microphone and other devices, but they require a user’s explicit permission. So a JavaScript-enabled page may not sneakily enable a web-camera, observe the surroundings and send the information to the NSA. <br> <br>
+
+                                    Different tabs/windows generally do not know about each other. Sometimes they do, for example when one window uses JavaScript to open the other one. But even in this case, JavaScript from one page may not access the other if they come from different sites (from a different domain, protocol or port). <br><br>
+
+                                    This is called the “Same Origin Policy”. To work around that, both pages must agree for data exchange and contain a special JavaScript code that handles it. We’ll cover that in the tutorial.<br><br>
+
+                                    This limitation is, again, for the user’s safety. A page from http://anysite.com which a user has opened must not be able to access another browser tab with the URL http://gmail.com and steal information from there. <br>
+
+                                </p>
+                            </div>
+
+                            <div class="containerone">
+                                <div class="stuck">
+                                    <h3>Uniqueness of Javascript</h3>
+                                </div>
+                                <p style=" padding: 10px;
+  margin-left: 5%;
+               margin-right: 5%;">
+
+                                    Javascript is different and special because it allows for a
+                                    full unity and integration with HTML/CSS,
+                                    Tasks which are straightforward to accomplish are done simply and it has tbe
+                                    support by all major browsers and enabled by default.
+                                    JavaScript is the only browser technology that combines these three things.
+
+                                    That’s what makes JavaScript unique. That’s why it’s the most widespread tool for creating browser interfaces.
+
+                                    JavaScript also allows to create servers, mobile applications, etc. which is pretty cool! <br> <br>
+
+                                    In this section, we shall try to cover the basics of Javascript, but not comprehensively.</p>
+                            </div>
+                            <div class="containertwo">
+                                <div class="containerone">
+                                    <div class="stuck">
+                                        <h3>Introduction to Javascript Basics</h3>
+                                    </div>
+
+                                    <ul> <strong>1) The Console </strong>
+                                        <li> The console is that all prominent viewer screen. It displays important messages, like errors, for developers. Most of the work the computer does with our code is not visible to us by default. Thus, to see what our work has produced we would eventually we would eventually print, or log, to our console directly.</li>
+
+                                        <li>In JavaScript, the console keyword refers to an object, a collection of data and actions, that we can use in our code. Keywords are words that are built into the JavaScript language, so the computer will recognize them and treats them specially.</li>
+
+                                        <li>We should initially turn our attention towards the .log() method, which is an action (or method), that is built into the console object. When we write console.log() what we put inside the parentheses will get printed, or logged, to the console.</li>
+
+                                        <li>This is conducive towards printing values to the console, so we can view the work that we’re doing. This is basically the idea of the console.</li>
+
+                                        E.g.: console.log(125);
+
+                                        <li>This example logs 125 to the console. The semicolon refers to the end of the line, or statement. Although it is not mandatory in JavaScript to end your code with a semicolon, it is nevertheless always best practice to put one.</li>
+
+                                        <li>We can also use console.log() to print different kinds of data, and that's the fun of it.
+
+
+                                        </li>
+                                    </ul> <br> <br>
+                                    <hr>
+
+                                    <ul> <strong>2) The Comment </strong>
+                                        <li> Comments are pieces of code that have nothing to do with the project being undertaken, other than just providing notes to the user or users. They are basically written in human language and are skipped over by the computer or the server. They are notes that are added by developers so that when other developers, or even yourself as a developer, returns later on to glance at your code, any possibilities of disconcertion or confusion can be evaded. </li>
+
+                                        <li>As we write JavaScript, we can write comments in our code that the computer will ignore as our program runs. These comments exist just for human readers.</li>
+
+                                        <li>Comments can explain what the code is doing, leave instructions for developers using the code, or add any other useful annotations.</li>
+                                    </ul>
+
+                                    <ol> <strong> There are two types of code comments in JavaScript: </strong>
+
+                                        <li>A single line comment will comment out a single line and is denoted with two forward slashes // preceding it.</li> <br>
+
+                                        // Prints 5 to the console <br>
+                                        console.log(5); <br> <br>
+                                        You can also use a single line comment to comment after a line of code: <br>
+
+                                        console.log(5); <br> // Prints 5 <br><br>
+                                        <li>A multi-line comment will comment out multiple lines and is denoted with /* to begin the comment, and */ to end the comment.</li> <br>
+
+                                        /*
+                                        This is all commented <br>
+                                        console.log(10); <br>
+                                        None of this is going to run! <br>
+                                        console.log(99);
+                                        */ <br> <br>
+                                        You can also use this syntax to comment something out in the middle of a line of code: <br>
+
+                                        console.log(/*IGNORED!*/ 5); <br> // Still just prints 5 <br> <br>
+                                    </ol>
+                                    <hr>
+
+                                    <ul> <strong>3) The types of data </strong>
+                                        <li>
+                                            Within Javascript, there are various types or kinds of data. They are classified into seven types though the first 6 of those types are considered to be the most basic data types in the language. The last data type belongs to a category of data types that are more complex. As you learn more about the seventh type of data types, you’ll be able to create complex collections of data. Here are the seven types of data: </li> <br>
+                                        <ol>
+                                            <li>
+                                                <ul> <u> <em>Number:</em></u></ul> Any number, including numbers with decimals: 4, 8, 1516, 23.42.
+                                            </li> <br>
+                                            <li>
+                                                <ul><u><em>String:</em></u></ul> Any grouping of characters on your keyboard (letters, numbers, spaces, symbols, etc.) surrounded by single quotes: ' ... ' or double quotes " ... ".
+                                            </li><br>
+                                            <li>
+                                                <ul><u><em>Boolean:</em></u></ul> This data type only has two possible values— either true or false (without quotes). It’s helpful to think of booleans as on and off switches or as the answers to a “yes” or “no” question.
+                                            </li><br>
+                                            <li>
+                                                <ul><u><em>Null:</em></u></ul> This data type represents the intentional absence of a value, and is represented by the keyword null (without quotes).
+                                            </li><br>
+                                            <li>
+                                                <ul><u><em>Undefined:</em></u></ul> This data type is denoted by the keyword undefined (without quotes). It also represents the absence of a value though it has a different use than null.
+                                            </li><br>
+                                            <li>
+                                                <ul><u><em>Symbol:</em></u></ul> A newer feature to the language, symbols are unique identifiers, useful in more complex coding.
+                                            </li><br>
+                                            <li>
+                                                <ul><u><em>Object:</em></u></ul> Collections of related data.
+                                            </li>
+                                        </ol><br>
+
+
+                                        Let’s deal with focussing our attention on strings and numbers! <br> <br>
+
+                                        console.log('Location of xyz towers is near baker st. May's avenue, Chelmsford, UK); <br>
+                                        console.log(40);<br><br>
+                                        In the example above, we first printed a string. Our string isn’t just a single word; it includes both capital and lowercase letters, spaces, and punctuation.
+
+                                        Next, we printed the number 40, notice we did not use quotes. Thus we can see how easy it is log in data within Javascript.
+                                    </ul>
+
+                                    <br> <br>
+                                    <hr>
+                                    <ul> <strong>4) Arithmetic operators </strong>
+                                        <li> It's always a good idea to know basic arithmetic before delving into the intricacies of computer programming because of the simple reason that you'd likely be dealing with calculations based in your code. </li>
+
+                                        <li> An operator is defined as a character that performs a task in our code. JavaScript has several built-in in arithmetic operators that allow us to perform mathematical calculations on numbers. These include the following operators and their corresponding symbols:</li>
+
+                                        <ol>
+                                            <li>Add: + </li>
+                                            <li>Subtract: - </li>
+                                            <li>Multiply: *</li>
+                                            <li>Divide: /</li>
+                                            <li>Remainder: %</li>
+                                        </ol>
+
+                                        <li> Within javascript, this is pretty straightforward and we can guess how this will work out as follows: <br>
+                                            console.log(3 + 4); // Prints 7 <br>
+                                            console.log(5 - 1); // Prints 4 <br>
+                                            console.log(4 * 2); // Prints 8 <br>
+                                            console.log(9 / 3); // Prints 3 <br> </li> <br>
+                                        Note that when we console.log() the computer will evaluate the expression inside the parentheses and print that result to the console. If we wanted to print the characters 3 + 4, we would wrap them in quotes and print them as a string.
+
+                                        The remainder operator, sometimes called <em>modulo</em>, returns the number that remains after the right-hand number divides into the left-hand number as many times as it evenly can: 11 % 3 equals 2 because 3 fits into 11 three times, leaving 2 as the remainder.</li>
+                                    </ul>
+
+                                    <hr>
+
+                                    <ul> <strong>5) Concatenating strings </strong>
+                                        <li> Within Javascript, we have the ability to not only append (or add) numbers but also strings containing letters. This is known as concatenation. Do note that in concatenating strings, every character and space is taken into account, so be sure to include the appropriate number of spaces when coding. Here are some examples: <br> <br>
+
+                                            console.log('hi' + 'ya'); <br>// Prints 'hiya'<br> <br>
+                                            console.log('wo' + 'ah'); <br>// Prints 'woah'<br><br>
+                                            console.log('I love to ' + 'code.')<br>
+                                            // Prints 'I love to code.'<br><br>
+
+                                            Here's another example:<br>
+                                            console.log('front ' + 'space');<br>
+                                            // Prints 'front space'<br><br>
+                                            console.log('back' + ' space');<br>
+                                            // Prints 'back space'<br><br>
+                                            console.log('no' + 'space'); <br>
+                                            // Prints 'nospace'<br><br>
+                                            console.log('middle' + ' ' + 'space'); <br>
+                                            // Prints 'middle space' <br><br> </li>
+                                    </ul>
+                                    <hr>
+
+                                    <ul> <strong>6) Properties </strong>
+                                        <li> When you introduce a new piece of data into a JavaScript program, the browser saves it as an instance of the data type. Every string instance has a property called length that stores the number of characters in that string. You can retrieve property information by appending the string with a period and the property name: <br> <br> </li>
+
+                                        console.log('Hello'.length); <br> // Prints 5<br><br>
+
+                                        <strong>The . is another operator! We call it the dot operator. </strong> <br> <br>
+
+                                        <li>In the example above, the value saved to the length property is retrieved from the instance of the string, 'Hello'. The program prints 5 to the console, because Hello has five characters in it.</li>
+                                    </ul>
+                                    <hr>
+
+                                    <ul> <strong>7) Methods </strong>
+                                        <li>Methods are actions we can perform. JavaScript provides a number of string methods.<br><br>
+
+                                            We use, these methods by adding an instance with a period (the dot operator), the name of the method, and opening and closing parentheses: e.g. 'example string'.methodName().<br><br>
+
+                                            If you recall, when we used the console.log() we were calling the .log() method on the console object. Let’s see console.log() and some real string methods now!<br><br>
+
+                                            console.log('hello'.toUpperCase());<br> // Prints 'HELLO'<br><br>
+                                            console.log('Hey'.startsWith('H'));<br> // Prints true<br><br>
+                                            Let’s look at each of the lines above:<br><br>
+
+                                            On the first line, the .toUpperCase() method is called on the string instance 'hello'. The result is logged to the console. This method returns a string in all capital letters: 'HELLO'.<br><br>
+                                            On the second line, the .startsWith() method is called on the string instance 'Hey'. This method also accepts the character 'H' as an input, or argument, between the parentheses. Since the string 'Hey' does start with the letter 'H', the method returns the boolean true.<br><br>
+                                            You can find a list of built-in string methods in the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">JavaScript documentation.</a> Developers use documentation as a reference tool. It describes JavaScript’s keywords, methods, and syntax.<br> <br>
+                                        </li>
+                                    </ul>
+                                    <hr>
+
+                                    <ul> <strong>8) Built-in Objects </strong>
+                                        <li>In addition to console, there are other objects built into JavaScript. Down the line, you’ll build your own objects, but for now these “built-in” objects are full of useful functionality.<br><br>
+
+                                            <strong>For example, </strong> if you wanted to perform more complex mathematical operations than arithmetic, JavaScript has the built-in Math object.<br><br>
+
+                                            The great thing about objects is that they have methods! Let’s call the .random() method from the built-in Math object: <br><br>
+
+                                            console.log(Math.random());<br> // Prints a random number between 0 and 1<br><br>
+                                            In the example above, we called the .random() method by appending the object name with the dot operator, the name of the method, and opening and closing parentheses. This method returns a random number between 0 and 1. <br> <br>
+
+                                            To generate a random number between 0 and 50, we could multiply this result by 50, like so: <br><br>
+
+                                            Math.random() * 50;<br><br>
+                                            The example above will likely evaluate to a decimal. To ensure the answer is a whole number, we can take advantage of another useful Math method called Math.floor().<br><br>
+
+                                            Math.floor() takes a decimal number, and rounds down to the nearest whole number. You can use Math.floor() to round down a random number like this:<br><br>
+
+                                            Math.floor(Math.random() * 50);<br>
+                                            In this case:<br><br>
+
+                                            Math.random generates a random number between 0 and 1.<br>
+                                            We then multiply that number by 50, so now we have a number between 0 and 50.<br><br>
+                                            Then, Math.floor() rounds the number down to the nearest whole number.<br>
+                                            To see all of the properties and methods on the Math object, take a look at the documentation here.<br> </li>
+                                    </ul>
+
+                                    <hr>
+                                    <ol> <strong> <u>Summary</u> </strong>
+                                        <li>
+
+                                            Data is printed, or logged, to the console, a panel that displays messages, with console.log().
+                                        <li>We can write single-line comments with // and multi-line comments between /* and */.</li><br>
+                                        <li>There are 7 fundamental data types in JavaScript: strings, numbers, booleans, null, undefined, symbol, and object.</li><br>
+                                        <li>Numbers are any number without quotes: 23.8879</li><br>
+                                        <li>Strings are characters wrapped in single or double quotes: 'Sample String'</li><br>
+                                        <li>The built-in arithmetic operators include +, -, *, /, and %.</li><br>
+                                        <li>Objects, including instances of data types, can have properties, stored information. The properties are denoted with a . after the name of the object, for example: 'Hello'.length.</li><br>
+                                        <li>Objects, including instances of data types, can have methods which perform actions. Methods are called by appending the object or instance with a period, the method name, and parentheses. For example: 'hello'.toUpperCase().</li><br>
+                                        <li>We can access properties and methods by using the ., dot operator.</li><br>
+                                        <li>Built-in objects, including Math, are collections of methods and properties that JavaScript provides.</li>
+                                    </ol>
+
+                                    <ul>
+                                        <li><strong> <u>Please visit Codecademy's impressive and all time useful
+                                                    <a href="https://www.codecademy.com/learn/introduction-to-javascript/modules/learn-javascript-introduction/cheatsheet"> cheatsheet </a> to quickly brush up on your skills! </u></strong> <br><br></li>
+                                    </ul>
+
+                                    <div class="pagination" style="text-align: center;">
+                                        <a href="#">&laquo;</a>
+                                        <a class="active" href="#">1</a>
+                                        <a href="#">2</a>
+                                        <a href="#">3</a>
+                                        <a href="#">4</a>
+                                        <a href="#">5</a>
+                                        <a href="#">6</a>
+                                        <a href="#">7</a>
+                                        <a href="#">8</a>
+                                        <a href="#">9</a>
+                                        <a href="#">10</a>
+                                        <a href="#">11</a>
+                                        <a href="#">12</a>
+                                        <a href="#">13</a>
+                                        <a href="#">14</a>
+                                        <a href="#">15</a>
+                                        <a href="#">16</a>
+                                        <a href="#">17</a>
+                                        <a href="#">&raquo;</a>
+                                    </div> <br>
+
+                                </div>
+                            </div>
+
+
+
+                            <img src="https://images.unsplash.com/photo-1548611716-3000815a5803?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80" alt="Nature" class="responsive" width="800" height="400">
+
+                            <div id="mySidenav" class="sidenav">
+                                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                                <a href="#">HTML5</a>
+                                <a href="#">CSS3</a>
+                                <a href="#">Javascript</a>
+                                <a href="#">React</a>
+                                <a href="#">Swift</a>
+                            </div>
+
+                            <div class="navbartwo">
+                                <a href="#References">References</a>
+                                <a href="#">Privacy</a>
+
+                            </div>
+
+
+                </section>
+            </div>
+
+        </div>
+
+
+
+</head>
+
+<main>
+
+    <header>
+
+    </header>
+
+    <script>
+        $(document).ready(function() {
+            $("a").on('click', function(event) {
+                if (this.hash !== "") {
+                    event.preventDefault();
+                    var hash = this.hash;
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top
+                    }, 800, function() {
+                        window.location.hash = hash;
+                    });
+                }
+            });
+        });
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="scroll-down.js"></script>
+
+    <script>
+        window.onscroll = function() {
+            myFunction()
+        };
+
+        var navbar = document.getElementById("navbar");
+        var sticky = navbar.offsetTop;
+
+        function myFunction() {
+            if (window.pageYOffset >= sticky) {
+                navbar.classList.add("sticky")
+            } else {
+                navbar.classList.remove("sticky");
+            }
+        }
+    </script>
+
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "120px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+    </script>
+
+    <footer>
+
+
+    </footer>
+
+
+</main>
+
+<body>
+
+</body></html>
